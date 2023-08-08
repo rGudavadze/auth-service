@@ -1,0 +1,33 @@
+version: '3.9'
+
+
+services:
+  auth_pgdb:
+    image: "postgres:14.3"
+    container_name: auth_db
+    env_file:
+      - env/.env.dev
+    ports:
+      - "5435:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+
+  auth_api:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-dev
+    container_name: auth_api
+    env_file:
+      - env/.env.dev
+    volumes:
+      - ./:/opt/app
+    depends_on:
+      - auth_pgdb
+    entrypoint: ""
+    command: /home/auth/docker-entrypoint-dev.sh
+    ports:
+      - "8004:8000"
+
+
+volumes:
+  auth_data:
