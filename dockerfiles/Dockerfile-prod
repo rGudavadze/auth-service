@@ -1,0 +1,24 @@
+FROM python:3.10
+
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir -p /opt/app
+WORKDIR /opt/app
+
+COPY requirements.txt /opt/app/
+
+RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
+
+COPY . /opt/app/
+RUN mkdir -p /opt/app/static
+
+RUN useradd -ms /bin/bash auth
+RUN chown -R auth:auth /opt/app
+
+ADD scripts/docker-entrypoint.sh /home/auth/docker-entrypoint.sh
+ADD scripts/check_service.py /home/auth/check_service.py
+
+RUN chmod +x /home/auth/docker-entrypoint.sh
+USER auth
+
+ENTRYPOINT ["/home/auth/docker-entrypoint.sh"]
