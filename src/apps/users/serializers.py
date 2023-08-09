@@ -1,7 +1,11 @@
 from rest_framework import serializers
 
 from apps.users.models import User
-from utils.exceptions import InvalidEmailOrPasswordException
+from utils.auth import TokenVerification
+from utils.exceptions import (
+    InvalidEmailOrPasswordException,
+    InvalidTokenTypeException,
+)
 from utils.validators import PasswordMatchValidator
 
 
@@ -46,5 +50,21 @@ class LoginSerializer(serializers.Serializer):
             raise InvalidEmailOrPasswordException()
 
         attrs["user_id"] = user.id
+
+        return attrs
+
+
+class RefreshTokenSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField(write_only=True)
+    payload = serializers.DictField(read_only=True)
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        token_payload = TokenVerification.decode_token(attrs.get("refresh_token"))
+        if token_payload.get("token_type") != "refresh":
+            raise InvalidTokenTypeException()
+
+        attrs["payload"] = token_payload
 
         return attrs
