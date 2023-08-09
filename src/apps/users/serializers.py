@@ -17,7 +17,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "email",
-            "username",
             "password",
             "password_confirm",
         )
@@ -32,6 +31,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop("password_confirm")
         instance = User.objects.create_user(**validated_data)
         return instance
+
+    def to_representation(self, instance):
+        return {"detail": f"Hey {instance.email}, your account has been created."}
 
 
 class LoginSerializer(serializers.Serializer):
