@@ -19,6 +19,7 @@ class User(AbstractUser, BaseModel):
             MinLengthValidator(8),
         ],
     )
+    username = models.CharField(max_length=128, null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
