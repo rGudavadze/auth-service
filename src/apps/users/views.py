@@ -1,9 +1,19 @@
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.users.models import User
-from apps.users.serializers import LoginSerializer, RefreshTokenSerializer
+from apps.users.serializers import (
+    LoginSerializer,
+    RefreshTokenSerializer,
+    RegisterSerializer,
+)
 from utils.auth import TokenVerification
+
+
+class RegisterAPIView(CreateAPIView):
+    serializer_class = RegisterSerializer
+    queryset = User.objects.all()
 
 
 class LoginAPIView(APIView):
