@@ -39,6 +39,7 @@ THIRD_PARTY_APPS = [
 OUR_APPS = [
     "apps.base",
     "apps.users",
+    "apps.staff",
 ]
 
 INSTALLED_APPS = (
