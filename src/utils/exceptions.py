@@ -8,7 +8,7 @@ class PasswordMismatchException(APIException):
     """
 
     status_code = status.HTTP_400_BAD_REQUEST
-    default_detail = "Password and Confirm Password fields must have the same value."
+    default_detail = "Password and Password Confirm fields must have the same value."
     default_code = "bad_request"
 
 
