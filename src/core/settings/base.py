@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "users.User"
 
 # Application definition
 
@@ -37,8 +38,7 @@ THIRD_PARTY_APPS = [
 
 OUR_APPS = [
     "apps.base",
-    "apps.inventory",
-    "apps.warehouse",
+    "apps.users",
 ]
 
 INSTALLED_APPS = (
@@ -153,3 +153,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.AllowAny",
     ],
 }
+
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+JWT_ALGORITHM = "HS256"
+JWT_TOKEN_EXP_TIME = 60
+JWT_REFRESH_TOKEN_EXP_TIME = 60 * 24
+JWT_TOKEN_TYP = "JWT"
