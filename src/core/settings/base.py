@@ -34,6 +34,7 @@ AUTH_USER_MODEL = "users.User"
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "drf_spectacular",
 ]
 
 OUR_APPS = [
@@ -153,6 +154,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
