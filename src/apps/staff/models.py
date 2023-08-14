@@ -8,7 +8,11 @@ class Department(BaseModel):
 
 
 class Employee(BaseModel):
-    user = models.ForeignKey(to="users.User", on_delete=models.CASCADE, help_text="User")
+    user = models.OneToOneField(
+        to="users.User",
+        on_delete=models.CASCADE,
+        help_text="User",
+    )
     department = models.ForeignKey(
         to=Department, on_delete=models.CASCADE, help_text="Department"
     )
