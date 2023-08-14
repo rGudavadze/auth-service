@@ -9,7 +9,7 @@ from utils.exceptions import (
 from utils.validators import PasswordMatchValidator
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(help_text="Password Confirm")
 
     class Meta:
