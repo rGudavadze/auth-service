@@ -41,6 +41,7 @@ OUR_APPS = [
     "apps.base",
     "apps.users",
     "apps.staff",
+    "apps.customers",
 ]
 
 INSTALLED_APPS = (
