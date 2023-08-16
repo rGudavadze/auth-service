@@ -5,14 +5,19 @@ import jwt
 from django.conf import settings
 from rest_framework.exceptions import AuthenticationFailed
 
+from apps.staff.models import Employee
+from apps.users.models import User
+
 
 class TokenVerification:
-    @staticmethod
-    def create_token(user_id: UUID, exp_time: int, token_type: str):
+    @classmethod
+    def create_token(cls, user_id: UUID, exp_time: int, token_type: str):
         header = {"typ": settings.JWT_TOKEN_TYP}
 
+        user_info = cls.generate_user_information(user_id=user_id)
+
         payload = {
-            "sub": user_id,
+            "sub": user_info,
             "exp": datetime.utcnow() + timedelta(minutes=exp_time),
             "iat": datetime.utcnow(),
             "token_type": token_type,
@@ -59,3 +64,29 @@ class TokenVerification:
 
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed("Token has expired.")
+
+    @staticmethod
+    def generate_user_information(user_id):
+        user_info = dict()
+        user = User.objects.filter(pk=user_id).first()
+
+        user_info["user"] = user_id
+
+        if hasattr(user, "customer"):
+            user_info["customer"] = str(user.customer.id)
+
+        elif hasattr(user, "employee"):
+            employee = (
+                Employee.objects.select_related("department").filter(user=user_id).first()
+            )
+            user_info.update(
+                {
+                    "employee": str(user.employee.id),
+                    "department": {
+                        "id": str(employee.department.id),
+                        "name": employee.department.name,
+                    },
+                }
+            )
+
+        return user_info

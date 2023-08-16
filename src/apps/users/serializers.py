@@ -32,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance = User.objects.create_user(**validated_data)
         return instance
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: User):
         return {"detail": f"Hey {instance.email}, your account has been created."}
 
 
@@ -60,7 +60,7 @@ class RefreshTokenSerializer(serializers.Serializer):
     refresh_token = serializers.CharField(write_only=True)
     payload = serializers.DictField(read_only=True)
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict):
         attrs = super().validate(attrs)
 
         token_payload = TokenVerification.decode_token(attrs.get("refresh_token"))
