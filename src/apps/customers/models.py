@@ -7,6 +7,7 @@ class Customer(BaseModel):
     user = models.OneToOneField(
         to="users.User",
         on_delete=models.CASCADE,
+        related_name="customer",
         help_text="User",
     )
     identity_number = models.CharField(max_length=128, help_text="Identity Number")

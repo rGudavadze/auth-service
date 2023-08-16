@@ -11,6 +11,7 @@ class Employee(BaseModel):
     user = models.OneToOneField(
         to="users.User",
         on_delete=models.CASCADE,
+        related_name="employee",
         help_text="User",
     )
     department = models.ForeignKey(
