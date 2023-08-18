@@ -30,7 +30,7 @@ class EmployeeRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ["id", "department", "user"]
+        fields = ("id", "department", "user")
 
     def create(self, validated_data):
         user_serializer = UserSerializer(data=validated_data.pop("user"))
