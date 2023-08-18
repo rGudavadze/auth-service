@@ -173,3 +173,28 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "0.0.1",
     "PREPROCESSING_HOOKS": ["core.spectacular.preprocessing_filter_spec"],
 }
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "custom_formatter": {"format": "[{asctime}] {levelname} {message}", "style": "{"}
+    },
+    "handlers": {
+        "custom_handler": {
+            "class": "logging.StreamHandler",
+            "formatter": "custom_formatter",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "info.log",
+            "formatter": "custom_formatter",
+        },
+    },
+    "loggers": {
+        "logger": {
+            "handlers": ["custom_handler", "file"],
+            "level": "DEBUG",
+        }
+    },
+}
