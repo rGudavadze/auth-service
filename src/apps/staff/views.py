@@ -13,6 +13,7 @@ from apps.staff.serializers import (
     EmployeeRegisterSerializer,
     EmployeeSerializer,
 )
+from utils.logger import logger
 
 
 class DepartmentListAPIView(ListCreateAPIView):
@@ -32,6 +33,8 @@ class EmployeeRegisterAPIView(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        logger.info(f"Employee with id: {serializer.data.get('id')} has been registered.")
 
         return Response(
             {"detail": "you have successfully created your account."},

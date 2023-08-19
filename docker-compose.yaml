@@ -11,12 +11,14 @@ services:
       - "5435:5432"
     volumes:
       - auth_data:/var/lib/postgresql/data
+    networks:
+      - microbrewery-network
 
-  auth_api:
+  auth-api:
     build:
       context: .
       dockerfile: dockerfiles/Dockerfile-dev
-    container_name: auth_api
+    container_name: auth-api
     env_file:
       - env/.env.dev
     volumes:
@@ -27,7 +29,13 @@ services:
     command: /home/auth/docker-entrypoint-dev.sh
     ports:
       - "8004:8000"
+    networks:
+      - microbrewery-network
 
 
 volumes:
   auth_data:
+
+networks:
+  microbrewery-network:
+    external: true

@@ -155,6 +155,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -163,3 +166,35 @@ JWT_ALGORITHM = "HS256"
 JWT_TOKEN_EXP_TIME = 60
 JWT_REFRESH_TOKEN_EXP_TIME = 60 * 24
 JWT_TOKEN_TYP = "JWT"
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Auth Service API",
+    "DESCRIPTION": "API for microbrewery auth",
+    "VERSION": "0.0.1",
+    "PREPROCESSING_HOOKS": ["core.spectacular.preprocessing_filter_spec"],
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "custom_formatter": {"format": "[{asctime}] {levelname} {message}", "style": "{"}
+    },
+    "handlers": {
+        "custom_handler": {
+            "class": "logging.StreamHandler",
+            "formatter": "custom_formatter",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "info.log",
+            "formatter": "custom_formatter",
+        },
+    },
+    "loggers": {
+        "logger": {
+            "handlers": ["custom_handler", "file"],
+            "level": "DEBUG",
+        }
+    },
+}
