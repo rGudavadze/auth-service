@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from uuid import UUID
+from uuid import UUID, uuid4
 
 import jwt
 from django.conf import settings
@@ -19,6 +19,8 @@ class TokenVerification:
         payload = {
             "sub": user_info,
             "exp": datetime.utcnow() + timedelta(minutes=exp_time),
+            "jti": uuid4().hex,
+            "user_id": user_id,
             "iat": datetime.utcnow(),
             "token_type": token_type,
         }

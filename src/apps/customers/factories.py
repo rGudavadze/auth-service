@@ -6,7 +6,7 @@ from apps.users.factories import UserFactory
 
 class CustomerFactory(DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
-    identify = factory.Faker("ssn")
+    identity_number = factory.Faker("ssn")
     name = factory.Faker("company")
 
     class Meta:
