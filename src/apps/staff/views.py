@@ -34,7 +34,7 @@ class EmployeeRegisterAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        logger(f"Employee with id: {serializer.data.get('id')} has been registered.")
+        logger.info(f"Employee with id: {serializer.data.get('id')} has been registered.")
 
         return Response(
             {"detail": "you have successfully created your account."},

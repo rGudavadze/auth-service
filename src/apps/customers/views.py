@@ -19,7 +19,7 @@ class CustomerRegisterAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        logger(f"Customer with id: {serializer.data.get('id')} has been registered.")
+        logger.info(f"Customer with id: {serializer.data.get('id')} has been registered.")
 
         return Response(
             {"detail": "you have successfully created your account."},
